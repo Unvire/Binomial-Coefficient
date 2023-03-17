@@ -14,7 +14,7 @@ class App(tk.Tk):
         self.entryDown = tk.Entry(self.frame)
         self.entryUp.insert(0, 6)
         self.entryDown.insert(0, 2)
-        self.labelResult = tk.Label(self.frame,text='', padx=2)
+        self.labelResult = tk.Label(self.frame,text='= ', padx=2)
         self.buttonEquals = tk.Button(self.frame, text='=', pady=2, padx=20, command=lambda: self.checkInput())
         self.labelN = tk.Label(self.frame, text='n: ')
         self.labelK = tk.Label(self.frame, text='k: ')
@@ -55,17 +55,14 @@ class App(tk.Tk):
         ## check if n<k
         if noError and n<k:
             noError=False
-            tk.messagebox.showerror('Error', 'k must be smaller or equal ')
+            tk.messagebox.showerror('Error', 'k must be smaller or equal n')
 
         ## do the math
         if noError:
-            ## case of (0 0), (1 0), (n 1)
-            if k in (0,1):
-                if n==0:
-                    self.labelResult['text']=1
-                else:
-                    self.labelResult['text']=n
-            ## default
+            if k==0:
+                self.labelResult['text']='= 1'
+            if k==1:
+                self.labelResult['text']=f'= {n}'
             else:
                 self.countNewton(n,k)
 
@@ -89,7 +86,7 @@ class App(tk.Tk):
             nList=[num for num in nList if num not in nMinusKList]
             result = elementMultiply(nList)/elementMultiply(kList)
 
-        self.labelResult['text'] = int(result)
+        self.labelResult['text'] = f'= {int(result)}'
 
 
 
